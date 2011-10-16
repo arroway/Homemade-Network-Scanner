@@ -22,12 +22,12 @@ void *capture_thread(void *arg) {
 	if (size == 0) {
 		printf("capture_thread: wrote nothing, maybe pipe is full\n");
 		exit(1);
-        } else if (size == -1) {
-                perror("capture_thread:");
-                exit(1);
-        } else {
-                printf("capture_thread: integer written to pipe\n");
-        }
+	} else if (size == -1) {
+		perror("capture_thread:");
+		exit(1);
+	} else {
+		printf("capture_thread: integer written to pipe\n");
+	}
 
 
 	return NULL;
