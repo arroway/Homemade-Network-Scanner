@@ -2,20 +2,27 @@
 #define __SNIFF_H__
 
 #include <pcap.h>
-#include <dnet.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <netinet/if_ether.h>
+#include <netinet/ip.h>
 
 
 /* Structure with the information about a host*/
-struct host {
+struct host{
 	struct host *next;
-	eth_addr_t	mac_addr;	/* MAC address of the host*/
-	ip_addr_t	ip_addr;		/* IP address */
-					/* Host name */
+	//When they are more data, we may create some structures
+	//instead for each level
+ 	struct ether_addr	mac_addr;	/* MAC address of the host*/
+	struct ip		ip_hdr;		/* IP header */
 };
 
-typedef struct host* lhosts; 
+struct ll_hosts{
+	struct host *ptr_start;
+	struct host *ptr_cur;
+};
 
-/* List containing the data about the machines on the network */
+struct ll_hosts *ll_new(void);
 
 void handle_packet(u_char *, const struct pcap_pkthdr *, const u_char * );
 
