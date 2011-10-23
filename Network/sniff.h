@@ -28,5 +28,7 @@ struct ll_hosts *ll_new(void);
 int ll_browse_ether(struct ll_hosts *, void *);
 
 void handle_packet(u_char *, const struct pcap_pkthdr *, const u_char * );
-//int is_new_host(struct ether_header *);
+void handle_ether(struct ll_hosts *hosts, struct ether_header *e_hdr);
+
+void print_mac_address(u_char *);
 #endif

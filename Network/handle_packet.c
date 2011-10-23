@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include <pcap.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
@@ -11,6 +12,7 @@ void handle_packet(u_char *user, const struct pcap_pkthdr *header, const u_char 
 	struct ether_header *e_hdr;
 	struct ll_hosts *hosts;
 	int is_new;
+	int i;
  
 	printf("Got a packet with length of [%d]\n", header->len);
 
@@ -34,16 +36,54 @@ void handle_packet(u_char *user, const struct pcap_pkthdr *header, const u_char 
 
 		if (is_new){
 			printf("new host\n");
-			//void handle_ether();
+			handle_ether(hosts, e_hdr);
+			if (hosts->ptr_cur){
+				/*for (i=0; i<ETHER_ADDR_LEN; i++){
+					printf(&hosts->ptr_cur->mac_addr[i])};*/
+				print_mac_address(hosts->ptr_cur->mac_addr);
+				
+				printf("\n");
+			}
 		}
 		
 	}  	
 }
 
 /* Handling the data from the ethernet frame */
-/*int handle_ether(struct ether_header *e_hdr){
+void handle_ether(struct ll_hosts *hosts, struct ether_header *e_hdr){
 
+	struct ll_hosts *temp;
+	struct host *new_host = malloc(sizeof(struct host));
+
+	memcpy(new_host->mac_addr, &e_hdr->ether_dhost, sizeof(u_char) * ETHER_ADDR_LEN );
+
+	new_host->next = NULL;
+	hosts->ptr_cur = new_host;
+
+	//if (hosts == NULL){
+	//	return new_host;
+	//} 
+	//else {
+	
+//	if (hosts){ 
+//		temp = hosts;
+//
+//		while (temp->ptr_cu != NULL){
+//			temp = temp->next;
+//		}
+
+//		temp->next = new_host;
+	//	return hosts;		 
+//	}
 	//store the information for the new hosts
 }
 
-*/
+ void print_mac_address(u_char *addr) {
+          int i;
+          for (i = 0 ; i < ETHER_ADDR_LEN ; i++) {
+                  printf("%02X", addr[i]);
+                  if (i < ETHER_ADDR_LEN - 1)
+                          printf(":");
+          }
+ }
+
