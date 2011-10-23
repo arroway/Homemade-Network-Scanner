@@ -13,7 +13,7 @@ void *Window::listener(void *obj)
 	Window *win = (Window *)obj;
 	printf("Listener thread : RUNNING...\n");
 	ssize_t new_size;
-	ssize_t size;
+	size_t size;
 	int integer;
 	
 	while (1) {
