@@ -33,7 +33,7 @@ int ll_browse_ether(struct ll_hosts *hosts, void *arg){
 	struct host *tmp = hosts->ptr_start;
 	
 	while (tmp != NULL){
-		if (memcpy(tmp->mac_addr, arg, (sizeof(u_char) * ETHER_ADDR_LEN))) 
+		if (memcmp(tmp->mac_addr, arg, (sizeof(u_char) * ETHER_ADDR_LEN))) 
 			return(EXIT_SUCCESS);
 		 else 
 			tmp = tmp->next; 
