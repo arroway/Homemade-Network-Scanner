@@ -13,7 +13,7 @@ extern int pipe_fd[2];
 
 void *capture_thread(void *arg) {
 	ssize_t size;
-	int index = 0;
+	int index = 42;
 
 	printf("Test capture thread : RUNNING...\n");
 
@@ -26,7 +26,7 @@ void *capture_thread(void *arg) {
 		perror("capture_thread:");
 		exit(1);
 	} else {
-		printf("capture_thread: integer written to pipe\n");
+		printf("capture_thread: integer %d written to pipe\n", index);
 	}
 
 

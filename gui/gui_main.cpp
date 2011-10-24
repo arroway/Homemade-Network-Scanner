@@ -4,7 +4,7 @@
 #include <pthread.h>
 
 extern "C" void *capture_thread(void *);
- 
+
 #define READ_PIPE       0
 #define WRITE_PIPE      1
 
@@ -14,6 +14,7 @@ int main(int argc, char *argv[])
 {
 	int ret;
 	pthread_t capture_pthread_id;
+	pthread_t gui_listener_id;
 
 	QApplication app(argc, argv);
 
@@ -35,6 +36,9 @@ int main(int argc, char *argv[])
 
 	Window win;
 	win.show();
+	win.pipe_fd = pipe_fd;
+
+	pthread_create(&gui_listener_id, NULL, Window::listener, (void *)&win);
  
 	return app.exec();
 }
