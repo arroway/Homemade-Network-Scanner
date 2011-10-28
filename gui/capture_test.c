@@ -13,12 +13,12 @@ extern int pipe_fd[2];
 
 void *capture_thread(void *arg) {
 	ssize_t size;
-	int index = 42;
+	int index = 0;
 
 	printf("Test capture thread : RUNNING...\n");
 
 	/* sending a few integers to GUI */
-	for ( ; index < 50 ; ++index) {
+	for ( ; index < 4 ; ++index) {
 		size = write(pipe_fd[WRITE_PIPE], &index, sizeof(index));
 
 		if (size == 0) {

@@ -2,7 +2,7 @@
 #include <QLabel>
 #include <QTreeWidgetItem>
 
-const char *machines[] = {"machine1", "machine2", "machine3"};
+const char *machines[] = {"machine0", "machine1", "machine2", "machine3"};
 
 #define READ_PIPE       0
 #define WRITE_PIPE      1
@@ -32,6 +32,7 @@ void *Window::listener(void *obj)
 		} while (size < sizeof(integer));
 
 		printf("listener_thread: integer %d read from pipe\n", integer);
+		win->addMachine(integer);
 	}
 
 	return obj;
@@ -39,7 +40,12 @@ void *Window::listener(void *obj)
 
 void Window::addMachine(int num)
 {
-	
+	if (num < 4 && num >= 0) {
+		QTreeWidgetItem *new_machine = new QTreeWidgetItem(m_tree, 0);
+		QString name(machines[num]);
+		new_machine->setText(0, name);
+		printf("adding machine number %d (%s) to machine list\n", num, machines[num]);
+	}
 }
  
 Window::Window() : QWidget()
@@ -48,11 +54,6 @@ Window::Window() : QWidget()
  
     // Construction du QTreeWidget
     m_tree = new QTreeWidget(this);
-
-    QTreeWidgetItem *test = new QTreeWidgetItem(m_tree, 0);
-    test->setText(0, "machine1");
-    QTreeWidgetItem *test2 = new QTreeWidgetItem(m_tree, 0);
-    test2->setText(0, "machine2");
 
     m_tree->setColumnCount(1);
     m_tree->setHeaderLabel("Liste des machines : ");
