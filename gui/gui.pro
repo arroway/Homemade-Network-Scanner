@@ -7,7 +7,7 @@ TARGET =
 DEPENDPATH += .
 INCLUDEPATH += .
 
-LIBS = -lpthread
+LIBS += -lpthread
 
 # Input
 HEADERS += Window.h
