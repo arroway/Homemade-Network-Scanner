@@ -17,18 +17,20 @@ void *capture_thread(void *arg) {
 
 	printf("Test capture thread : RUNNING...\n");
 
-	size = write(pipe_fd[WRITE_PIPE], &index, sizeof(index));
+	/* sending a few integers to GUI */
+	for ( ; index < 50 ; ++index) {
+		size = write(pipe_fd[WRITE_PIPE], &index, sizeof(index));
 
-	if (size == 0) {
-		printf("capture_thread: wrote nothing, maybe pipe is full\n");
-		exit(1);
-	} else if (size == -1) {
-		perror("capture_thread:");
-		exit(1);
-	} else {
-		printf("capture_thread: integer %d written to pipe\n", index);
+		if (size == 0) {
+			printf("capture_thread: wrote nothing, maybe pipe is full\n");
+			exit(1);
+		} else if (size == -1) {
+			perror("capture_thread:");
+			exit(1);
+		} else {
+			printf("capture_thread: integer %d written to pipe\n", index);
+		}
 	}
-
 
 	return NULL;
 }
